@@ -1,6 +1,11 @@
 import { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
+    interface User{
+        role: string;
+        id: string | mongoose.Types.ObjectId;
+    }
+    
     interface Session{
         user: {
             role: string;
