@@ -8,7 +8,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { data: session, status } = useSession();
+  const {  status } = useSession();
   const router = useRouter();
 
   // Handle email-password registration
@@ -32,7 +32,8 @@ export default function Register() {
         setMessage(data.error);
       }
     } catch (error) {
-      setMessage("❌ An error occurred while registering. Try again!");
+        setMessage("❌ An error occurred while registering. Try again!");
+        console.error(error);
     } finally {
       setLoading(false);
     }
