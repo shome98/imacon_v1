@@ -48,7 +48,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
         <div className="flex justify-between items-center mt-4">
           <div>
             <span className="text-lg font-bold text-blue-600">
-              From ${lowestPrice.toFixed(2)}
+              From ₹{lowestPrice.toFixed(2)}
             </span>
             <p className="text-xs text-gray-500 mt-1">
               {product.variants.length} sizes available
