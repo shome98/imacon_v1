@@ -9,7 +9,7 @@ import { IMAGE_VARIANTS, ImageVariantType } from "@/models/Product.model";
 import { apiClient, ProductFormData } from "@/lib/server_actions";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 
-export default function AdminProductForm() {
+export default function ProductUploadForm() {
   const [loading, setLoading] = useState(false);
   const { showNotification } = useNotification();
 
