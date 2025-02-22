@@ -1,4 +1,3 @@
-"use server";
 import { IProduct } from "@/models/Product.model";
 import { IUser } from "@/models/User.model";
 
