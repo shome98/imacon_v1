@@ -32,7 +32,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-400 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen  p-4">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm">
         <h1 className="text-2xl font-semibold text-center text-gray-700 mb-4">Login</h1>
         {status !== "authenticated" ? (
