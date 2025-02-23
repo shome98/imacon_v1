@@ -16,8 +16,8 @@ export interface IOrder{
     userId: mongoose.Types.ObjectId | IPopulatedUser;
     productId: mongoose.Types.ObjectId | IPopulatedProduct;
     variant: ImageVariant;
-    razorpayOrderId: string;
-    razorpayPaymentId?: string;
+    stripeSessionId: string;
+    paymentIntentId?: string;
     amount: number;
     status: "pending" | "completed" | "failed";
     downloadUrl?: string;
@@ -40,11 +40,11 @@ const orderSchema = new Schema<IOrder>(
       license: {
         type: String,
         required: true,
-        enum: ["personal", "commercial"],
+        enum: ["Personal", "Commercial"],
       },
     },
-    razorpayOrderId: { type: String, required: true },
-    razorpayPaymentId: { type: String },
+    stripeSessionId: { type: String, required: true },
+    paymentIntentId: { type: String },
     amount: { type: Number, required: true },
     status: {
       type: String,
