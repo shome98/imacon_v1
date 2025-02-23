@@ -1,5 +1,7 @@
-import { IProduct } from "@/models/Product.model";
+import { IOrder } from "@/models/Order.model";
+import { ImageVariant, IProduct } from "@/models/Product.model";
 import { IUser } from "@/models/User.model";
+import { Types } from "mongoose";
 
 type FetchOptions = {
   method?: "GET" | "POST" | "PUT" | "DELETE";
@@ -8,6 +10,10 @@ type FetchOptions = {
 };
 export type ProductFormData = Omit<IProduct, "_id">;
 export type registerFormData = Omit<IUser, "_id">;
+export interface CreateOrderData {
+  productId: Types.ObjectId | string;
+  variant: ImageVariant;
+}
 class ApiClient {
 
     private async fetch<T>(endpoint: string,options: FetchOptions = {}): Promise<T> {
@@ -50,6 +56,22 @@ class ApiClient {
     return this.fetch<IProduct>("/products", {
       method: "POST",
       body: productData,
+    });
+  }
+
+  async getUserOrders() {
+    return this.fetch<IOrder[]>("/orders/user");
+  }
+
+  async createOrder(orderData: CreateOrderData) {
+    const sanitizedOrderData = {
+      ...orderData,
+      productId: orderData.productId.toString(),
+    };
+
+    return this.fetch<{ orderId: string; amount: number }>("/orders/checkout", {
+      method: "POST",
+      body: sanitizedOrderData,
     });
   }
 }
