@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { IOrder, IPopulatedProduct } from "@/models/Order.model";
@@ -7,11 +6,13 @@ import { Loader2, Download } from "lucide-react";
 import { IKImage } from "imagekitio-next";
 import { IMAGE_VARIANTS } from "@/models/Product.model";
 import { apiClient } from "@/lib/server_actions";
+import { useRouter } from "next/navigation";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [loading, setLoading] = useState(true);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -26,7 +27,8 @@ export default function OrdersPage() {
     };
 
     if (session) fetchOrders();
-  }, [session]);
+    if (status !== "authenticated") router.push("/");
+  }, [session,status,router]);
 
   if (loading) {
     return (
