@@ -71,7 +71,7 @@ export default function ProductUploadForm() {
   };
 
   return (
-    <div className="w-screen min-h-screen flex items-center justify-center bg-gray-400">
+    <div className="min-h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-4xl  bg-gray-300 shadow-lg rounded-lg p-6 flex flex-col overflow-auto"
