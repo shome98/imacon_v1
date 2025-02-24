@@ -1,5 +1,5 @@
 "use client";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -11,18 +11,25 @@ export default function Login() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      console.log(session?.user);
+      //console.log(session?.user);
+      router.push("/");
     }
-  }, [status, session]);
+  }, [status, session,router]);
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
+    // await signIn("credentials", {
+    //   email,
+    //   password,
+    //   redirect: false,
+    // });
     const signinCred = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-    console.log(signinCred);
+    if (signinCred?.ok) router.push("/");
+    //console.log(signinCred);
   };
 
   const handleGoogle = async (e: FormEvent) => {
@@ -31,44 +38,47 @@ export default function Login() {
     if (signAuth?.ok) router.push("/");
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen  p-4">
+  return (status !== "authenticated" && (
+    
+    < div className = "flex flex-col items-center justify-center min-h-screen  p-4" >
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-center text-gray-700 mb-4">Login</h1>
-        {status !== "authenticated" ? (
-          <form className="flex flex-col space-y-4" onSubmit={handleLogin}>
-            <input
-              type="email"
-              name="email"
-              value={email}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="Enter your email"
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              value={password}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="Enter your password"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-            >
-              Login
-            </button>
-            <button
-              onClick={handleGoogle}
-              className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
-            >
-              Sign in with Google
-            </button>
-          </form>
-        ) : (
+         {/*login component*/}
+          <>
+            <h1 className="text-2xl font-semibold text-center text-gray-700 mb-4">Login</h1>
+            <form className="flex flex-col space-y-4" onSubmit={handleLogin}>
+              <input
+                type="email"
+                name="email"
+                value={email}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                value={password}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+              >
+                Login
+              </button>
+              <button
+                onClick={handleGoogle}
+                className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+              >
+                Sign in with Google
+              </button>
+            </form>
+        </>
+        {/* (
           <div className="text-center">
             <h1 className="text-green-600 font-semibold">You are signed in</h1>
             <button
@@ -78,8 +88,8 @@ export default function Login() {
               Logout
             </button>
           </div>
-        )}
+        )*/}
       </div>
-    </div>
-  );
+    </div >
+  ));
 }
