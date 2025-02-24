@@ -1,21 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Provider from "./components/Provider";
+import Header from "./components/Header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Load Montserrat font
+const montserrat = Montserrat({
   subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Load Nunito Sans font
+const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
+  variable: "--font-nunito-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "ImaCon",
-  description: "Site to buy images by ai",
+  description: "Site to buy images by AI",
 };
 
 export default function RootLayout({
@@ -26,11 +31,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${montserrat.variable} ${nunitoSans.variable} antialiased`}
       >
         <Provider>
-          {children}
-          </Provider>
+          <Header />
+          <main className="container mx-auto px-4 py-8">{children}</main>
+        </Provider>
       </body>
     </html>
   );
