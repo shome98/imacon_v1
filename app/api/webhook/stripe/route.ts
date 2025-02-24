@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
         if (event.type == "checkout.session.completed") {
             const session = event.data.object;
-            const order = await Order.findByIdAndUpdate(
+            const order = await Order.findOneAndUpdate(
                 { stripeSessionId: session.id },
                 {
                     paymentIntentId: session.payment_intent,
