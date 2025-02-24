@@ -9,8 +9,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(req: NextRequest) {
     try {
         const body = await req.text();
+        console.log("the body is: ", body);
         const signature = req.headers.get("stripe-signature");
+        console.log("the signature is: ", signature);
         const event = stripe.webhooks.constructEvent(body, signature!, process.env.STRIPE_WEBHOOK_SECRET!);
+        console.log("the event is: ", event);
 
         await connectToDatabase();
 
