@@ -5,7 +5,7 @@ import { Construction, Home } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center">
       <div className="text-center">
         <Construction className="w-20 h-20 mx-auto mb-4 text-gray-700 dark:text-gray-300" />
         <h1 className="text-4xl font-bold mb-2">Coming Soon</h1>
