@@ -57,19 +57,19 @@ export default function Header() {
 
         {/* Navigation Links */}
         <div
-          className={`md:navbar-end md:flex md:items-center md:gap-4 ${
-            isMenuOpen ? "block" : "hidden"
-          } max-md:w-full max-md:mt-4`}
+          className={`md:navbar-end md:flex md:items-center md:gap-4 ${isMenuOpen ? "block" : "hidden"
+            } max-md:w-full max-md:mt-4`}
         >
           <ul className="flex flex-row gap-4 p-0 text-base">
             {session ? (
               <>
-                <li>
-                  <Link href="/check" className="flex items-center gap-2">
+                {session.user.role === "Admin" && <li>
+                  <Link href="/admin" className="flex items-center gap-2">
                     <ImagePlus size={20} />
                     Add Product
                   </Link>
-                </li>
+                </li>}
+                
                 <li>
                   <Link href="/orders" className="flex items-center gap-2">
                     <ShoppingCart size={20} />
