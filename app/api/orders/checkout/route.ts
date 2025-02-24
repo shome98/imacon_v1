@@ -13,7 +13,10 @@ export async function POST(req: NextRequest) {
         
         const { productId, variant } = await req.json();
         await connectToDatabase();
-        
+        const userEmail = session.user?.email;
+        if (!userEmail) {
+            return NextResponse.json({ error: "User email is required" }, { status: 400 });
+        }
         const stripeSession = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode:"payment",
@@ -29,6 +32,8 @@ export async function POST(req: NextRequest) {
                     quantity: 1,
                 },
             ],
+            customer_email: userEmail, // Ensure email is included
+            billing_address_collection: "required", // Collects customer address
             success_url: `${process.env.NEXTAUTH_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,
         });
