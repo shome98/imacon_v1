@@ -1,24 +1,21 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Loader2 } from "lucide-react";
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const sessionId = searchParams.get("session_id");
 
   useEffect(() => {
     if (sessionId) {
-      // Display the order number for 3 seconds, then redirect to /orders
       const timer = setTimeout(() => {
         router.push("/orders");
       }, 3000);
 
-      return () => clearTimeout(timer); // Cleanup the timer
+      return () => clearTimeout(timer); 
     } else {
-      // If no session_id is provided, redirect to home
       router.push("/");
     }
   }, [sessionId, router]);
@@ -37,4 +34,19 @@ export default function SuccessPage() {
       </div>
     </div>
   );
+}
+
+export default function SuccessPage() {
+    return (
+        <Suspense
+            fallback={
+                <div className="min-h-screen flex flex-col items-center justify-center">
+                    <Loader2 className="w-8 h-8 animate-spin text-gray-600 dark:text-gray-400" />
+                    <p className="mt-2 text-gray-600 dark:text-gray-400">Loading...</p>
+                </div>
+            }
+        >
+            <SuccessContent />
+        </Suspense>
+    );
 }
