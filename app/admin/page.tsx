@@ -2,6 +2,6 @@
 
 import ProductUploadForm from "../components/ProductUploadForm"
 
-export default function Check() {
+export default function Admin() {
     return <ProductUploadForm />;
 }
