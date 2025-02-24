@@ -5,16 +5,19 @@ import { useSession, signOut } from "next-auth/react";
 import { Home, User, Sun, Moon, LogOut, ShoppingCart, Menu, X, ImagePlus } from "lucide-react";
 import { useNotification } from "./NotificationPopup";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { data: session } = useSession();
   const { showNotification } = useNotification();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const router = useRouter();
 
   const handleSignOut = async () => {
     try {
       await signOut();
+      router.push("/");
       showNotification("Signed out successfully", "success");
     } catch {
       showNotification("Failed to sign out", "error");
@@ -32,8 +35,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className="navbar bg-gray-500 shadow-md w-2/3 mx-auto mt-10 p-4 rounded-xl flex flex-row justify-between items-center">
-        {/* Site Name */}
+      <nav className="navbar bg-gray-500 shadow-md w-2/3 mx-auto mt-10 p-4 rounded-xl flex flex-row justify-between items-center sticky top-0 z-50">
         <div className="navbar-start">
           <Link href="/" className="link text-xl font-semibold no-underline flex items-center gap-2">
             <Home size={24} />
