@@ -72,26 +72,38 @@ export default function ProductPage() {
       //   return;
       // }
 
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount,
-        currency: "INR",
-        name: "ImaCon",
-        description: `${product.name} - ${variant.type} Version`,
-        order_id: orderId,
-        handler: function () {
-          showNotification("Payment successful!", "success");
-          router.push("/orders");
-        },
-        prefill: {
-          email: session.user.email,
-        },
-      };
+      // const options = {
+      //   key: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!,
+      //   amount,
+      //   currency: "INR",
+      //   name: "ImaCon",
+      //   description: `${product.name} - ${variant.type} Version`,
+      //   order_id: orderId,
+      //   handler: function () {
+      //     showNotification("Payment successful!", "success");
+      //     router.push("/orders");
+      //   },
+      //   prefill: {
+      //     email: session.user.email,
+      //   },
+      // };
+      if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
+      showNotification("Stripe public key is missing", "error");
+      return;
+      }
 
-      const rzp = new (window as any).Stripe(options);
-      rzp.open();
+    const stripe = window.Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
+
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: orderId,
+    });
+
+    if (error) {
+      console.error("Stripe Checkout error:", error);
+      showNotification(error instanceof Error ? error.message : "Could not complete stripe checkout", "error");
+    }
     } catch (error) {
-      console.error(error);
+      console.error("this is error ", error);
       showNotification(
         error instanceof Error ? error.message : "Payment failed",
         "error"
