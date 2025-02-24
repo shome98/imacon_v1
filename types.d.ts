@@ -6,5 +6,9 @@ declare global{
         conn: Connection | null;
         promise: Promise<Connection> | null;
     };
+
+    interface Window{
+        Stripe: typeof Stripe;
+    }
 }
 export {}
