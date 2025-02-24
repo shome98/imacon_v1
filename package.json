@@ -12,6 +12,7 @@
     "@stripe/react-stripe-js": "^3.1.1",
     "@stripe/stripe-js": "^5.6.0",
     "@types/nodemailer": "^6.4.17",
+    "@types/stripe-v3": "^3.1.33",
     "bcryptjs": "^3.0.2",
     "imagekit": "^6.0.0",
     "imagekitio-next": "^1.0.1",
