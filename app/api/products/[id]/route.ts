@@ -39,3 +39,25 @@ export async function PUT(request: NextRequest, props: { params: Promise<{ id: s
         return NextResponse.json({ error: "⚠️ Oops! Failed to update product. Please check the data and try again." }, { status: 500 });
     }
 }
+
+export async function DELETE(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+    try {
+        const session = await getServerSession(authOptions);
+        if (!session || session.user?.role !== "Admin") {
+            return NextResponse.json({ error: "🚫 Unauthorized! Admin access required." }, { status: 401 });
+        }
+
+        const { id } = await props.params;
+        await connectToDatabase();
+
+        const deletedProduct = await Product.findByIdAndDelete(id).lean();
+        if (!deletedProduct) {
+            return NextResponse.json({ error: "😵 Product not found" }, { status: 404 });
+        }
+
+        return NextResponse.json({ message: "✅ Product deleted successfully!" });
+    } catch (error) {
+        console.error("❌ Error deleting product:", error);
+        return NextResponse.json({ error: "⚠️ Oops! Failed to delete product. Please try again." }, { status: 500 });
+    }
+}
