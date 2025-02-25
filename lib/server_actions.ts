@@ -74,6 +74,19 @@ class ApiClient {
       body: sanitizedOrderData,
     });
   }
+
+  async updateProduct(id: string, productData: ProductFormData) {
+    return this.fetch<IProduct>(`/products/${id}`, {
+      method: "PUT",
+      body: productData,
+    });
+  }
+
+  async deleteProduct(id: string) {
+    return this.fetch<{ message: string }>(`/products/${id}`, {
+      method: "DELETE",
+    });
+  }
 }
 
 export const apiClient = new ApiClient();
