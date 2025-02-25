@@ -9,7 +9,7 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
             const { pathname } = req.nextUrl;
-            console.log("requested 😊 ", pathname);
+            //console.log("requested 😊 ", pathname);
 
         // Allow webhook endpoint
         if (pathname.startsWith("/api/webhook")) {
@@ -36,7 +36,7 @@ export default withAuth(
 
         // Admin routes require admin role
         if (pathname.startsWith("/admin")) {
-          return token?.role === "admin";
+          return token?.role === "Admin";
         }
 
         // All other routes require authentication
