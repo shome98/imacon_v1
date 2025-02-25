@@ -134,8 +134,8 @@ export default function ProductUploadForm() {
                     className="w-full px-3 py-2 border rounded-md text-gray-500"
                     {...register(`variants.${index}.license`)}
                   >
-                    <option value="personal">Personal Use</option>
-                    <option value="commercial">Commercial Use</option>
+                    <option value="Personal">Personal Use</option>
+                    <option value="Commercial">Commercial Use</option>
                   </select>
                 </div>
 

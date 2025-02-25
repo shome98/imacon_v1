@@ -51,7 +51,7 @@ const imageVariantSchema = new Schema<ImageVariant>({
   license: {
     type: String,
     required: true,
-    enum: ["personal", "commercial"],
+    enum: ["Personal", "Commercial"],
   },
 });
 
