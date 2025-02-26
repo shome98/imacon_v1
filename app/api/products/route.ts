@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     await connectToDatabase();
     const body: IProduct = await request.json();
 
-    if (!body.name || !body.imageUrl || !body.variants || body.variants.length === 0) {
+    if (!body.name || !body.imageUrl ||  !body.imageFieldId ||!body.variants || body.variants.length === 0) {
       return NextResponse.json(
         { error: "⚠️ Missing required fields! Please provide product name, image URL, and at least one variant." },
         { status: 400 }

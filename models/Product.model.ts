@@ -34,6 +34,7 @@ export interface IProduct {
   name: string;
   description: string;
   imageUrl: string;
+  imageFieldId: string;
   variants: ImageVariant[];
 }
 
@@ -60,6 +61,7 @@ const productSchema = new Schema<IProduct>(
     name: { type: String, required: true },
     description: { type: String, required: true },
     imageUrl: { type: String, required: true },
+    imageFieldId: { type: String, required: true },
     variants: [imageVariantSchema],
   },
   { timestamps: true }

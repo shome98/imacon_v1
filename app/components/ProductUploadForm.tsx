@@ -23,6 +23,7 @@ export default function ProductUploadForm() {
       name: "",
       description: "",
       imageUrl: "",
+      imageFieldId:"",
       variants: [
         {
           type: "SQUARE" as ImageVariantType,
@@ -40,6 +41,7 @@ export default function ProductUploadForm() {
 
   const handleUploadSuccess = (response: IKUploadResponse) => {
     setValue("imageUrl", response.filePath);
+    setValue("imageFieldId", response.fileId);
     showNotification("Image uploaded successfully!", "success");
   };
 
@@ -53,6 +55,7 @@ export default function ProductUploadForm() {
       setValue("name", "");
       setValue("description", "");
       setValue("imageUrl", "");
+      setValue("imageFieldId", "");
       setValue("variants", [
         {
           type: "SQUARE" as ImageVariantType,
