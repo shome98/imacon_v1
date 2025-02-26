@@ -27,8 +27,9 @@ class ApiClient {
         const response = await fetch(`/api${endpoint}`, {
             method,
             headers: defaultHeaders,
-            body: body ? JSON.stringify(body) : undefined,
-        });
+          body: body ? JSON.stringify(body) : undefined,
+            cache:"no-store"
+        },);
 
         if (!response.ok) {
             throw new Error(await response.text());
@@ -83,9 +84,16 @@ class ApiClient {
   }
 
   async deleteProduct(id: string) {
-    return this.fetch<{ message: string }>(`/products/${id}`, {
+    return this.fetch<{ message: string,}>(`/products/${id}`, {
       method: "DELETE",
     });
+  }
+
+  async deleteImage(fileId: string) {
+    return this.fetch<{ message: string,status:number,error?:string }>("/imagekit/delete", {
+      method: "POST",
+      body:{fileId}
+    })
   }
 }
 
