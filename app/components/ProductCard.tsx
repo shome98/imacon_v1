@@ -1,9 +1,10 @@
+//product page single
 import { IKImage } from "imagekitio-next";
 import Link from "next/link";
 import { IProduct, IMAGE_VARIANTS } from "@/models/Product.model";
-import { Eye } from "lucide-react";
+import { Eye, Edit } from "lucide-react";
 
-export default function ProductCard({ product }: { product: IProduct }) {
+export default function ProductCard({ product, isAdmin }: { product: IProduct; isAdmin?: boolean }) {
   const lowestPrice = product.variants.reduce(
     (min, variant) => (variant.price < min ? variant.price : min),
     product.variants[0]?.price || 0
@@ -13,9 +14,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
     <div className="bg-white shadow-lg rounded-2xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl duration-300">
       <figure className="relative">
         <Link href={`/products/${product._id}`} className="relative group block">
-          <div
-            className="overflow-hidden relative w-full h-64"
-          >
+          <div className="overflow-hidden relative w-full h-64">
             <IKImage
               path={product.imageUrl}
               alt={product.name}
@@ -55,13 +54,23 @@ export default function ProductCard({ product }: { product: IProduct }) {
             </p>
           </div>
 
-          <Link
-            href={`/products/${product._id}`}
-            className="flex items-center bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300"
-          >
-            <Eye className="w-5 h-5 mr-2" />
-            View Options
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href={`/products/${product._id}`}
+              className="flex items-center bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300"
+            >
+              <Eye className="w-5 h-5 mr-2" />
+              View Options
+            </Link>
+            {isAdmin && (
+              <Link
+                href={`/admin?edit=${product._id}`}
+                className="flex items-center bg-green-600 text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition-colors duration-300"
+              >
+                <Edit className="w-5 h-5" />
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>
