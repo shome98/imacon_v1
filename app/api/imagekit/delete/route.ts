@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import ImageKit from "imagekit";
+import Product from "@/models/Product.model";
 
 const imagekit = new ImageKit({
   publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
@@ -21,8 +22,11 @@ export async function POST(request: Request) {
     console.log("Deleting file from ImageKit. File ID:", fileId);
 
     // Delete the file from ImageKit
-      const deleteResponse = await imagekit.deleteFile(fileId)
+    const deleteResponse = await imagekit.deleteFile(fileId);
     console.log("ImageKit delete response:", deleteResponse);
+    const product = await Product.findOneAndUpdate({ imageFieldId: fileId }, { imageFieldId: "", imageUrl: "" });
+    if (!product) throw new Error("from the delete image");
+
 
     return NextResponse.json(
       { message: "Image deleted successfully" },
